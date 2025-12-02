@@ -98,7 +98,7 @@ try:
         sleep(1)
 
         ampel_2.red.off()
-        ampel_2.amber.on()  # Rot-Gelb
+        ampel_2.amber.on()
         sleep(1)
         ampel_2.amber.off()
         ampel_2.green.on()
