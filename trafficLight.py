@@ -8,25 +8,25 @@ fussg_rot = LED(21)
 fussg_gruen = LED(20)
 knopf = Button(16)
 
-anforderung_fussgaenger = False
+knopf_fussgaenger = False
 
 
 def knopf_gedrueckt():
-    global anforderung_fussgaenger
-    anforderung_fussgaenger = True
-    print("Knopf wurde gedrückt! Anforderung gespeichert.")
+    global knopf_fussgaenger
+    knopf_fussgaenger = True
+    print("Knopf wurde gedrückt!")
 
 
 knopf.when_pressed = knopf_gedrueckt
 
 
-def intelligentes_warten(sekunden):
-    global anforderung_fussgaenger
+def waiting(sekunden):
+    global knopf_fussgaenger
 
     schritte = int(sekunden * 10)
 
     for _ in range(schritte):
-        if anforderung_fussgaenger:
+        if knopf_fussgaenger:
             return True
         sleep(0.1)
     return False
@@ -51,13 +51,11 @@ def alles_auf_rot():
 
 
 def fussgaenger_zyklus():
-    """Der Ablauf für die Fußgänger"""
-    global anforderung_fussgaenger
+    global knopf_fussgaenger
     print("Fußgängerphase startet...")
 
     alles_auf_rot()
 
-    # Fußgänger Grün
     fussg_rot.off()
     fussg_gruen.on()
     sleep(5)
@@ -66,12 +64,12 @@ def fussgaenger_zyklus():
     fussg_rot.on()
     sleep(2)
 
-    anforderung_fussgaenger = False
+    knopf_fussgaenger = False
     print("Fußgängerphase beendet.")
 
 
 
-print("Kreuzungs-Steuerung aktiv.")
+print("Kreuzungssteuerung aktiv.")
 print("Drücke den Knopf für Fußgänger.")
 
 ampel_1.green.on()
@@ -80,9 +78,9 @@ fussg_rot.on()
 
 try:
     while True:
-        abbruch = intelligentes_warten(5)
+        cancel = waiting(5)
 
-        if abbruch:
+        if cancel:
             fussgaenger_zyklus()
             ampel_1.red.off()
             ampel_1.amber.on()
@@ -105,9 +103,9 @@ try:
         ampel_2.amber.off()
         ampel_2.green.on()
 
-        abbruch = intelligentes_warten(5)
+        cancel = waiting(5)
 
-        if abbruch:
+        if cancel:
             fussgaenger_zyklus()
             continue
 
