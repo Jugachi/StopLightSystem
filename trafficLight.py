@@ -20,10 +20,10 @@ def knopf_gedrueckt():
 knopf.when_pressed = knopf_gedrueckt
 
 
-def waiting(sekunden):
+def waiting(seconds):
     global knopf_fussgaenger
 
-    schritte = int(sekunden * 10)
+    schritte = int(seconds * 10)
 
     for _ in range(schritte):
         if knopf_fussgaenger:
